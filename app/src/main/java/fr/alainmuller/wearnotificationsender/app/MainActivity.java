@@ -1,11 +1,13 @@
 package fr.alainmuller.wearnotificationsender.app;
 
-import android.app.NotificationManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preview.support.v4.app.NotificationManagerCompat;
+import android.preview.support.wearable.notifications.WearableNotifications;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -54,6 +56,11 @@ public class MainActivity extends ActionBarActivity {
         mapIntent.setData(geoUri);
         PendingIntent pMapIntent = PendingIntent.getActivity(this, 0, mapIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
+        // Un Intent paramétré
+        Intent intentBis = new Intent(this, SecondActivity.class);
+        intentBis.putExtra(getString(R.string.param_key), SecondActivity.SAVE);
+        PendingIntent pParamIntent = PendingIntent.getActivity(this, 1, intentBis, PendingIntent.FLAG_CANCEL_CURRENT);
+
         // On peut utiliser un style d'affichage en mode 'big view'
         // afin d'afficher du texte trop long pour tenir dans le setContentText
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
@@ -67,8 +74,9 @@ public class MainActivity extends ActionBarActivity {
 //                        .setContentText(getString(R.string.lipsum))
                         // Icône miniature du system tray
                 .setSmallIcon(R.drawable.ic_notif_cloud)
-                        // Icône large visible quand on ouvre les notifications sur le téléphone
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+                        // Icône large visible quand on ouvre les notifications sur le téléphone et fond de la notif Wear
+                        // cf. http://latestimagesphotos.blogspot.fr/2010/12/infrared-landscape-photography-image.html
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.back))
                         // Affichage d'un bigText scrollable sur Wear et dans la description de la notif sur téléphone
                 .setStyle(bigStyle)
                         // L'Intent par défaut
@@ -79,15 +87,21 @@ public class MainActivity extends ActionBarActivity {
                 .addAction(R.drawable.ic_notif_call, getString(R.string.notif_action_call), pDialIntent)
                 .addAction(R.drawable.ic_notif_net, getString(R.string.notif_action_net), pWebIntent)
                 .addAction(R.drawable.ic_notif_nav, getString(R.string.notif_action_nav), pMapIntent)
-                .addAction(R.drawable.ic_notif_save, getString(R.string.notif_action_save), pIntent);
+                .addAction(R.drawable.ic_notif_save, getString(R.string.notif_action_save), pParamIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        // Get an instance of the NotificationManager service (support anciennes versions)
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+        // Méthode classique : NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // On crér une WearableNotification pour accéder aux fonctionnalités spécifiques comme setHintHideIcon pour masquer l'icône de l'appli
+        Notification notification = new WearableNotifications.Builder(notificationBuilder)
+//                .setHintHideIcon(true)
+                .build();
 
         // On construit la notif à la volée
-        notificationManager.notify(notificationId, notificationBuilder.build());
+        notificationManager.notify(notificationId, notification);
 
         Toast.makeText(this, "Notif envoyée! =)", Toast.LENGTH_SHORT).show();
-
     }
 }
