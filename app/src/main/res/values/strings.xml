@@ -2,8 +2,11 @@
 <resources>
 
     <string name="app_name">Wear Notification Sender</string>
+    <string name="title_activity_main">Lancer une notif</string>
+    <string name="title_activity_second">Action lancée</string>
     <string name="notif_label">Génération de notifications pour Android Wear</string>
-    <string name="hello_world">Yay!</string>
+    <string name="wait_message">. . .</string>
+    <string name="success_message">Yay!</string>
     <string name="btn_main_sendnotif_text">Envoyer une notif</string>
-    <string name="title_activity_main_activity2">Sample Activity</string>
+
 </resources>

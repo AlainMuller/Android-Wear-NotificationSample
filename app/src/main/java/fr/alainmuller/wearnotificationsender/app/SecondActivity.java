@@ -6,11 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity2 extends Activity {
+public class SecondActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_activity2);
+        setContentView(R.layout.activity_second);
     }
+
 }
