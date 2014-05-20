@@ -9,4 +9,18 @@
     <string name="success_message">Yay!</string>
     <string name="btn_main_sendnotif_text">Envoyer une notif</string>
 
+    <!-- cf. http://developer.android.com/guide/components/intents-common.html#Maps pour la syntaxe -->
+    <string name="location">48.114493,-1.680319(Fun in Rennes)</string>
+    <string name="phone_number">0612345678</string>
+
+    <string name="notif_title">Essai de notif</string>
+    <string name="lipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Maecenas nec iaculis felis. Cras ut viverra nisi, eu dignissim diam.
+        Fusce aliquam cursus vulputate. Suspendisse nunc sem, dignissim eget lectus eget, fermentum scelerisque mi.
+        Suspendisse accumsan mi quis placerat placerat.</string>
+
+    <string name="notif_action_call">Appeler</string>
+    <string name="notif_action_net">Site</string>
+    <string name="notif_action_nav">Nav</string>
+    <string name="notif_action_save">Sauvegarder</string>
 </resources>
